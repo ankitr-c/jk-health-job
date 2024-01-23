@@ -1,7 +1,7 @@
 ip_addr=$1
 result=$(gcloud compute instances list --filter="networkInterfaces.accessConfigs.natIP:${ip_addr} OR networkInterfaces.networkIP:${ip_addr}" | awk 'NR>1 {print $NF}')
 
-if [ -z "$ip" ]
+if [ -z "$ip_addr" ]
     then
         echo "IP address not Provided"
         exit 1
