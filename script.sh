@@ -7,9 +7,10 @@ if [ -z "$ip_addr" ]; then
   exit 1
 fi
 
-result=$(gcloud compute instances list --filter="networkInterfaces.accessConfigs.natIP:${ip_addr} OR networkInterfaces.networkIP:${ip_addr}" | awk 'NR==1 {print $1, $NF; exit}')
-
+result=$(gcloud compute instances list --filter="networkInterfaces.accessConfigs.natIP:${ip_addr} OR networkInterfaces.networkIP:${ip_addr}" | awk 'NR==2 {print $1, $NF; exit}')
+status=$(echo $result | awk '{print $NF}')
 echo $result
+echo $status
 
 result=$(gcloud compute instances list --filter="networkInterfaces.accessConfigs.natIP:$ip_addr OR networkInterfaces.networkIP:$ip_addr" --format="value(status)")
 
