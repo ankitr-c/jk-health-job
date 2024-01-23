@@ -10,15 +10,15 @@ fi
 result=$(gcloud compute instances list --filter="networkInterfaces.accessConfigs.natIP:${ip_addr} OR networkInterfaces.networkIP:${ip_addr}" | awk 'NR==2 {print $1, $NF; exit}')
 status=$(echo $result | awk '{print $NF}')
 name=$(echo $result | awk '{print $1}')
-echo $name
-echo $status
 
-result=$(gcloud compute instances list --filter="networkInterfaces.accessConfigs.natIP:$ip_addr OR networkInterfaces.networkIP:$ip_addr" --format="value(status)")
-
-if [ -z "$result" ]; then
+if [ -z "$status" ]; then
   echo "Status is: DELETED or VM Unavailable"
-elif [ "$result" = "RUNNING" ]; then
-  echo "Status is: RUNNING"  
-elif [ "$result" = "TERMINATED" ]; then
-  echo "Status is: STOPPED"
+elif [ "$status" = "RUNNING" ]; then
+  echo "VM with IP: $ip_addr"
+  echo "NAME: $name"
+  echo "STATUS: RUNNING"  
+elif [ "$status" = "TERMINATED" ]; then
+  echo "VM with IP: $ip_addr"
+  echo "NAME: $name"
+  echo "STATUS: STOPPED"
 fi
