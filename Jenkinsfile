@@ -14,15 +14,15 @@ pipeline {
                 }
             }
         }
-    }
-    stage('Health Check Stage') {
-        steps {
-            echo 'Health Check Stage'
-            script {
-                sh """
+        stage('Health Check Stage') {
+            steps {
+                echo 'Health Check Stage'
+                script {
+                    sh """
                 chmod +x script.sh
                 ./script.sh ${params.ip_addr}
                 """
+                }
             }
         }
     }
